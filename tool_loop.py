@@ -68,12 +68,17 @@ builder.add_conditional_edges(
 
 builder.add_edge("run_tool", "call_model")
 
-initial_state: GraphState = {
-    "messages": [HumanMessage(content="Say hello in one short sentence.")]
-}
-
 graph = builder.compile()
 
-result = graph.invoke(initial_state)
+if __name__ == "__main__":
 
-print(result)
+    initial_state: GraphState = {
+        "messages": [HumanMessage(content="What is the status of CASE-002?")]
+    }
+
+    result = graph.invoke(
+        initial_state,
+        {"recursion_limit": 6},
+    )
+
+    print(result)

@@ -8,6 +8,8 @@ Session 1: a minimal offline `StateGraph` with typed state, nodes, edges, and co
 
 Session 2: a model-driven tool loop using `ChatOpenAI`, LangGraph state with message history, conditional routing, a local tool, and a return to the model for the final answer.
 
+Session 3: added a recursion limit, local behavior checks, and compared the LangGraph flow with a manually orchestrated tool loop.
+
 Run locally:
 
 ```bash

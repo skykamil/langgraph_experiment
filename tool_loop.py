@@ -44,11 +44,13 @@ def route_after_model(state: GraphState):
 def run_tool(state: GraphState):
     last_message = state["messages"][-1]
     if isinstance(last_message, AIMessage) and last_message.tool_calls:
-        tool_call = last_message.tool_calls[0]
-        if tool_call["name"] == "lookup_case_status":
-            status = lookup_case_status.invoke(tool_call["args"])
-            tool_message = ToolMessage(content=status, tool_call_id=tool_call["id"])
-            return {"messages": [tool_message]}
+        tool_messages: list[ToolMessage] = []
+        for tool_call in last_message.tool_calls:
+            if tool_call["name"] == "lookup_case_status":
+                status = lookup_case_status.invoke(tool_call["args"])
+                tool_message = ToolMessage(content=status, tool_call_id=tool_call["id"])
+                tool_messages.append(tool_message)
+        return {"messages": tool_messages}
 
 builder = StateGraph(GraphState)
 

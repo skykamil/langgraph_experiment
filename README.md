@@ -17,3 +17,27 @@ python3 -m pip install -r requirements.txt
 python3 graph.py
 python3 tool_loop.py
 ```
+## Checks
+
+Run the local behavior checks:
+
+```bash
+python3 test_tool_loop.py
+```
+The checks cover:
+
+- routing to `END` when no tool call is present;
+- routing to the tool node when a tool call is present;
+- execution of the local tool;
+- handling multiple tool calls returned in one model response;
+- matching each `ToolMessage` to the correct `tool_call_id`.
+
+The recursion safeguard was also verified manually by lowering `recursion_limit` to `2` and confirming that LangGraph raised `GraphRecursionError`.
+
+## Known limitations
+
+- The experiment uses only one local tool.
+- Tool execution is intentionally implemented manually instead of using a prebuilt `ToolNode`.
+- Unknown tool names are not handled explicitly.
+- There is no persistence or checkpointing.
+- There is no frontend, database, deployment, or production error handling.
